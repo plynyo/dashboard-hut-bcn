@@ -1,0 +1,104 @@
+PRÁCTICA — DASHBOARDING CON DATOS ABIERTOS E IA
+Gestión de Proyectos (UAB) · Prof. Dario Cottafava
+Prompts para copiar y pegar en Claude.ai o ChatGPT
+======================================================================
+
+----------------------------------------------------------------------
+PROMPT 1 — EXPLORAR EL DATASET
+(adjunta antes el archivo hut_comunicacio_opendata.csv con el clip 📎)
+----------------------------------------------------------------------
+Te adjunto el archivo hut_comunicacio_opendata.csv, descargado de Open Data BCN
+(Ajuntament de Barcelona). Es el registro de viviendas de uso turístico (HUT)
+de la ciudad. Antes de programar nada:
+1) Describe brevemente cada columna y qué significa.
+2) Dime cuántas filas hay y si hay valores vacíos o extraños.
+3) Propón 3 preguntas interesantes que un dashboard podría responder
+   para la gestión urbana de Barcelona.
+Responde en español y de forma breve.
+
+
+----------------------------------------------------------------------
+PROMPT 2 — GENERAR EL DASHBOARD
+----------------------------------------------------------------------
+Ahora crea un dashboard web en UN SOLO archivo HTML (HTML + CSS + JavaScript
+en el mismo archivo), con los textos en español.
+
+DATOS
+- Cuando se abre un HTML con doble clic, el navegador no deja leer el CSV
+  automáticamente: añade un botón para que el usuario seleccione el archivo
+  hut_comunicacio_opendata.csv desde su ordenador. Léelo con PapaParse.
+- Columnas a usar: CODI_DISTRICTE, NOM_DISTRICTE, CODI_BARRI, NOM_BARRI,
+  NUMERO_PLACES, LONGITUD_X, LATITUD_Y.
+- Carga los límites de los barrios desde esta URL:
+  https://raw.githubusercontent.com/martgnz/bcn-geodata/master/barris/barris.geojson
+  La propiedad BARRI del GeoJSON coincide con CODI_BARRI del CSV (códigos de
+  2 dígitos, p. ej. "01"). La propiedad AREA está en m².
+
+CONTENIDO
+1. Cuatro indicadores (KPI) arriba: nº de viviendas, nº de plazas,
+   plazas por vivienda y % de viviendas en los 5 barrios con más HUT.
+2. Un mapa coroplético de los barrios con MapLibre GL JS (librería de
+   código abierto) y el mapa base gratuito de OpenFreeMap, que NO
+   necesita API key. Usa este estilo:
+   https://tiles.openfreemap.org/styles/positron
+   No uses CARTO, Mapbox ni Google Maps (piden API key) ni los mosaicos
+   de tile.openstreetmap.org (se bloquean al abrir el HTML con doble clic).
+   3 indicadores seleccionables: nº de viviendas, nº de plazas y
+   viviendas por km². Con leyenda y un recuadro que muestre los valores
+   al pasar el ratón por un barrio.
+3. Un gráfico de barras horizontales (Chart.js) con los 10 barrios con
+   el valor más alto del indicador seleccionado.
+4. Un gráfico de barras con el total por distrito.
+5. Un filtro por distrito que actualice todo, y una casilla para mostrar
+   cada vivienda como un punto en el mapa.
+
+DISEÑO
+- Limpio y profesional; paleta de un solo color (dorado/marrón, de claro
+  a oscuro); que funcione también en el móvil.
+- En el pie de página: "Fuente: Open Data BCN (Ajuntament de Barcelona),
+  licencia CC BY 4.0 · Mapa base: OpenFreeMap, © OpenStreetMap".
+- Carga las librerías desde el CDN jsdelivr.
+
+Devuélveme el código COMPLETO en un solo bloque, sin omitir ninguna parte.
+
+
+----------------------------------------------------------------------
+PROMPT 3 — ITERAR / CORREGIR (ejemplos)
+----------------------------------------------------------------------
+a) Si algo no funciona (pantalla en blanco, mapa vacío, «API KEY REQUIRED»...):
+   Pulsa F12 en el navegador → pestaña "Console" → copia el error en rojo y escribe:
+   "Al abrir el archivo aparece este error en la consola: [PEGA AQUÍ EL ERROR].
+    Corrígelo y devuélveme el archivo completo."
+
+   Si el mapa muestra «API KEY REQUIRED»:
+   "El mapa base muestra API KEY REQUIRED. Cámbialo por MapLibre GL JS con
+    el estilo gratuito https://tiles.openfreemap.org/styles/positron y
+    devuélveme el archivo completo."
+
+b) Mejorar el análisis:
+   "Añade un indicador de viviendas turísticas por cada 1.000 habitantes.
+    Te adjunto el CSV de población por barrio de Open Data BCN."
+
+c) Añadir una segunda página:
+   "Crea una página sobre.html con la descripción del dataset, las columnas
+    usadas, el método, las limitaciones y la licencia, con el mismo estilo,
+    y un menú para navegar entre las dos páginas."
+
+
+----------------------------------------------------------------------
+CÓMO GUARDAR EL CÓDIGO COMO ARCHIVO .html
+----------------------------------------------------------------------
+Windows (Bloc de notas):
+  1. Copia todo el código (botón "Copy"/"Copiar" del bloque de código).
+  2. Abre el Bloc de notas → pega (Ctrl+V).
+  3. Archivo → Guardar como… → Tipo: "Todos los archivos (*.*)"
+     → Nombre: dashboard.html → Codificación: UTF-8 → Guardar
+     (en la misma carpeta que el CSV).
+Mac (TextEdit):
+  1. Formato → Convertir a texto normal (Mayús+Cmd+T) ANTES de pegar.
+  2. Pega el código → Archivo → Guardar → nombre dashboard.html
+     → si pregunta, elige "Usar .html".
+Recomendado: Visual Studio Code (gratuito) o Notepad++.
+
+Después: doble clic en dashboard.html → se abre en el navegador
+→ botón "Seleccionar archivo" → elige hut_comunicacio_opendata.csv.
